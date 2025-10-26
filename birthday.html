@@ -1,0 +1,173 @@
+<!--
+  Happy Birthday HTML + CSS single-file page
+  Edit the name in the <h1> below to personalize (search for "Happy Birthday,")
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title> Special birthday wish from S.</title>
+  <style>
+    :root{
+      --bg1:#2b0736; /* deep maroon-ish */
+      --bg2:#ffb84d; /* gold */
+      --card:#fff7ea;
+      --accent:#b71c1c;
+      --glass: rgba(255,255,255,0.06);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial}
+    body{
+      background: radial-gradient(circle at 10% 20%, rgba(255,200,80,0.06), transparent 15%),
+                  radial-gradient(circle at 90% 80%, rgba(255,160,60,0.06), transparent 12%),
+                  linear-gradient(120deg,var(--bg1), #5b0f4a 40%, #8a3e1b 70%, var(--bg2));
+      color:#111;
+      display:flex;align-items:center;justify-content:center;padding:2rem;
+    }
+
+    .stage{
+      width:min(980px,96%);
+      border-radius:20px;
+      padding:2.25rem;
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      box-shadow: 0 10px 30px rgba(11,8,10,0.45), inset 0 1px 0 rgba(255,255,255,0.03);
+      position:relative; overflow:hidden;
+      backdrop-filter: blur(6px);
+    }
+
+    /* Confetti pieces (pure CSS) */
+    .confetti{position:absolute;inset:0;pointer-events:none}
+    .confetti span{
+      position:absolute;display:block;width:10px;height:14px;opacity:0.95;transform-origin:center;border-radius:2px;
+      animation: fall linear infinite; will-change:transform,opacity
+    }
+    /* give many confetti with various positions/sizes/delays using nth-child */
+    .confetti span:nth-child(1){left:5%;top:-10%;background:#ffd54f;animation-duration:6s;animation-delay:0.1s}
+    .confetti span:nth-child(2){left:12%;top:-10%;background:#ff7043;animation-duration:7.2s;animation-delay:0.6s}
+    .confetti span:nth-child(3){left:20%;top:-10%;background:#4dd0e1;animation-duration:5.4s;animation-delay:0.3s}
+    .confetti span:nth-child(4){left:28%;top:-10%;background:#ffca28;animation-duration:6.6s;animation-delay:1.0s}
+    .confetti span:nth-child(5){left:36%;top:-10%;background:#66bb6a;animation-duration:8s;animation-delay:0.2s}
+    .confetti span:nth-child(6){left:44%;top:-10%;background:#e57373;animation-duration:6.8s;animation-delay:0.9s}
+    .confetti span:nth-child(7){left:52%;top:-10%;background:#ba68c8;animation-duration:5.6s;animation-delay:0.15s}
+    .confetti span:nth-child(8){left:60%;top:-10%;background:#4fc3f7;animation-duration:7.4s;animation-delay:0.8s}
+    .confetti span:nth-child(9){left:68%;top:-10%;background:#ffd54f;animation-duration:6.2s;animation-delay:0.05s}
+    .confetti span:nth-child(10){left:76%;top:-10%;background:#ff8a65;animation-duration:8.2s;animation-delay:0.4s}
+    .confetti span:nth-child(11){left:84%;top:-10%;background:#aed581;animation-duration:6.4s;animation-delay:1.2s}
+    .confetti span:nth-child(12){left:92%;top:-10%;background:#f8bbd0;animation-duration:7.0s;animation-delay:0.55s}
+
+    @keyframes fall{
+      0%{transform: translateY(-10vh) rotate(0deg);opacity:1}
+      100%{transform: translateY(110vh) rotate(720deg);opacity:0.06}
+    }
+
+    /* Balloons */
+    .balloons{position:absolute;left:2rem;bottom:1rem;display:flex;gap:1.1rem;align-items:flex-end}
+    .balloon{width:84px;height:110px;border-radius:60% 60% 55% 55%/65% 65% 35% 35%;position:relative;display:block;box-shadow: 0 10px 20px rgba(0,0,0,0.22);transform-origin:center bottom;animation: floatUp 6s ease-in-out infinite}
+    .balloon::after{content:'';position:absolute;left:50%;transform:translateX(-50%);bottom:-20px;width:2px;height:40px;background:linear-gradient(#333,#000);opacity:0.55}
+    .balloon.red{background: radial-gradient(circle at 30% 25%, #ff8a80, #c62828)}
+    .balloon.gold{background: radial-gradient(circle at 30% 25%, #ffd57e, #b06d11)}
+    .balloon.purple{background: radial-gradient(circle at 30% 25%, #e1bee7, #6a1b9a)}
+    .balloon.small{width:64px;height:86px;animation-duration:5.2s}
+    .balloon.big{width:98px;height:130px;animation-duration:7.2s}
+    @keyframes floatUp{
+      0%{transform:translateY(0) rotate(-2deg)}
+      50%{transform:translateY(-18px) rotate(2deg)}
+      100%{transform:translateY(0) rotate(-2deg)}
+    }
+
+    .content{
+      text-align:center; max-width:720px; margin:0 auto; position:relative; z-index:2;
+    }
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,255,255,0.95));
+      border-radius:16px; padding:2rem; box-shadow: 0 8px 30px rgba(8,8,12,0.35);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+    h1{
+      margin:0;font-size: clamp(1.6rem, 4vw, 3.2rem);letter-spacing:1px;color:var(--accent);
+      text-shadow: 0 6px 20px rgba(183,28,28,0.12), 0 2px 0 rgba(255,255,255,0.6);
+      display:flex;align-items:center;justify-content:center;gap:0.6rem
+    }
+    .sparkle{display:inline-block;filter:drop-shadow(0 4px 8px rgba(255,200,80,0.14));animation: twinkle 2s linear infinite}
+    @keyframes twinkle{0%{opacity:0.8}50%{opacity:1;transform:scale(1.05)}100%{opacity:0.8}}
+
+    p.lead{margin:1rem 0 1.6rem;font-size:1.05rem;color:#5b3b3b}
+
+    .cake{
+      width:180px;height:120px;margin:0.8rem auto 1.1rem;position:relative
+    }
+    .cake .base{height:72px;background:#fff3e0;border-radius:10px;padding:12px 14px;box-shadow:0 6px 16px rgba(0,0,0,0.12);border:4px solid #ffe0b2}
+    .cake .frost{position:absolute;left:24px;right:24px;top:-8px;height:40px;border-radius:8px;background:linear-gradient(180deg,#ffecb3,#ffd180);box-shadow: inset 0 2px 0 rgba(255,255,255,0.35)}
+    .candle{width:8px;height:28px;background:linear-gradient(#fff,#ffe082);position:absolute;left:50%;transform:translateX(-50%);top:-32px;border-radius:2px}
+    .flame{width:10px;height:16px;background: radial-gradient(circle at 40% 30%, #fff59d, #ff6d00);position:absolute;left:50%;transform:translateX(-50%);top:-46px;border-radius:50%}
+
+    .btns{display:flex;gap:0.7rem;justify-content:center;margin-top:1rem}
+    .btn{padding:0.6rem 1.2rem;border-radius:999px;border:0;cursor:pointer;font-weight:600;background:linear-gradient(90deg,var(--bg2),#ffd86b);box-shadow:0 6px 18px rgba(0,0,0,0.15)}
+
+    footer{margin-top:1rem;text-align:center;color:rgba(17,17,17,0.55);font-size:0.95rem}
+
+    /* small screens adjustments */
+    @media (max-width:520px){
+      .balloons{display:none}
+      .cake{width:140px}
+      .stage{padding:1.2rem}
+    }
+  </style>
+</head>
+<body>
+  <div class="stage">
+    <div class="confetti" aria-hidden="true">
+      <!-- 12 pieces of confetti -->
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span><span></span><span></span>
+    </div>
+
+    <div class="balloons" aria-hidden="true">
+      <div class="balloon red big"></div>
+      <div class="balloon gold small"></div>
+      <div class="balloon purple"></div>
+    </div>
+
+    <div class="content">
+      <div class="card">
+        <!-- Edit this heading to personalize -->
+        <h1>🎉 Happy Birthday Tarodkr ! from your Patil 
+            <!-- Two images with fade-in animation -->
+<div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:1.5rem 0;">
+  <img src="tarodkr.png" alt="Friend photo 1" 
+       style="width:250px; border-radius:15px; box-shadow:0 6px 18px rgba(0,0,0,0.2); animation: fadeIn 2s ease-in-out;">
+  <img src="tarodkr2.png" alt="Friend photo 2" 
+       style="width:250px; border-radius:15px; box-shadow:0 6px 18px rgba(0,0,0,0.2); animation: fadeIn 2s ease-in-out;">
+</div>
+
+<style>
+@keyframes fadeIn {
+  0% {opacity: 0; transform: translateY(20px);}
+  100% {opacity: 1; transform: translateY(0);}
+}
+</style>
+<span class="sparkle">✨</span></h1>
+        <p class="lead"><p class="lead">
+  You already know how special you are to me. No matter what our future holds, I’ll always pray to God for the best for you. Happiest birthday, Tarodkr — आणि रडत कमी जा  😉
+</p>
+.</p>
+
+        <div class="cake" aria-hidden="true">
+          <div class="frost"></div>
+          <div class="base"></div>
+          <div class="candle"></div>
+          <div class="flame"></div>
+        </div>
+
+        <div class="btns">
+          <button class="btn" onclick="location.reload()">Surprise Again</button>
+          <a class="btn" href="data:text/html,%3C!doctype%20html%3E%3Chtml%3E%3Cbody%3EHave%20a%20great%20day!%3C%2Fbody%3E%3C%2Fhtml%3E" download="happy-birthday.html">Save</a>
+        </div>
+      </div>
+
+      <footer>Made with ❤️ — Open this on a big screen for best effect.</footer>
+    </div>
+  </div>
+</body>
+</html>
